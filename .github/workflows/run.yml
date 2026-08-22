@@ -49,6 +49,18 @@ jobs:
         # Use Scrapy to crawl
         scrapy crawl arxiv -o ../data/${today}.jsonl
         
+        # 获取 bioRxiv Neuroscience 论文
+        export ENABLE_BIORXIV="${{ vars.ENABLE_BIORXIV }}"
+        export BIORXIV_CATEGORY="${{ vars.BIORXIV_CATEGORY }}"
+        export BIORXIV_DAYS="${{ vars.BIORXIV_DAYS }}"
+        export BIORXIV_KEYWORDS="${{ vars.BIORXIV_KEYWORDS }}"
+
+        if [ "$ENABLE_BIORXIV" = "true" ]; then
+            echo "开始获取 bioRxiv 论文..."
+            python fetch_biorxiv.py --output ../data/${today}.jsonl
+            echo "bioRxiv 获取完成"
+        fi
+        
         # 检查爬取是否成功 / Check if crawling was successful
         if [ ! -f "../data/${today}.jsonl" ]; then
             echo "爬取失败，未生成数据文件 / Crawling failed, no data file generated"
