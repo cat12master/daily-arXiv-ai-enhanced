@@ -57,7 +57,7 @@ jobs:
 
         if [ "$ENABLE_BIORXIV" = "true" ]; then
             echo "开始获取 bioRxiv 论文..."
-            python fetch_biorxiv.py --output ../data/${today}.jsonl
+            python ../fetch_biorxiv.py --output ../data/${today}.jsonl
             echo "bioRxiv 获取完成"
         fi
         
